@@ -10,9 +10,10 @@ public class Library {
 		System.out.println("Book Added Succesfully");
 		}
 	
-	public void removeBook(int id) {
+	public Book removeBook(int id) {
 		bok.removeIf(b->b.getId()==id);
 		System.out.println("Book Removed Succesfully");
+		return null;
 	}
 	public Book searchBook(String titel) {
 		for(Book b:bok) {
@@ -51,10 +52,25 @@ public void savefile() {
 	
 	}
 }
-public void loadfile() {
-	try(BufferedReader r=new BufferedReader(new FileReader("data,csv")))
-	String line;
-			while ((line=r.readLine())!=null) {
+public void loadFromFile() {
+    try (BufferedReader br = new BufferedReader(new FileReader("data.csv"))) {
+        String line;
+        while ((line = br.readLine()) != null) {
+           String[]arr= line.split(",");
+           Book b= new Book(Integer.parseInt(arr[0]),(arr[1]),(arr[2]));
+           b.setBorrowed(Boolean.parseBoolean(arr[3]));
+           bok.add(b);
+        }
+        System.out.println("Data Loaded Successfully!");
+    } catch (Exception e) {
+        System.out.println("No Saved File Found!");
+    }
+}
+public void ShowBook(){
+	System.out.println("Your book list : ");
+	for(Book b:bok) {
+		System.out.println(b);
+	}
 }
 	
 	
